@@ -1,5 +1,12 @@
-// Where booking enquiries are sent. Change this if you use a different address.
-const BOOKING_EMAIL = "hello@omglive.co.uk";
+// Where booking enquiries go. While this is empty, the form copies the enquiry and
+// opens Facebook Messenger. Put an email address here (one that receives mail) to
+// switch the form to email instead.
+const BOOKING_EMAIL = "";
+const MESSENGER_URL = "https://m.me/OMGLiveMusic";
+
+if (BOOKING_EMAIL) {
+  document.getElementById("form-submit").textContent = "Send enquiry";
+}
 
 // Mobile menu
 const toggle = document.querySelector(".nav__toggle");
@@ -72,8 +79,26 @@ form.addEventListener("submit", (e) => {
   ].join("\n");
   const subject = `Booking enquiry: ${data.get("type")} (${date})`;
 
-  window.location.href =
-    `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  note.textContent = "Your email app should now open with your enquiry ready to send. If it doesn't, message us on Facebook.";
-  note.className = "form__note";
+  if (BOOKING_EMAIL) {
+    window.location.href =
+      `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    note.textContent = "Your email app should now open with your enquiry ready to send. If it doesn't, message us on Facebook.";
+    note.className = "form__note";
+    return;
+  }
+
+  // Messenger can't be pre-filled, so copy the enquiry for the visitor to paste
+  const text = `${subject}\n\n${body}`;
+  const copying = navigator.clipboard && window.isSecureContext
+    ? navigator.clipboard.writeText(text).then(() => true, () => false)
+    : Promise.resolve(false);
+  const win = window.open(MESSENGER_URL, "_blank");
+  if (win) win.opener = null;
+  copying.then((copied) => {
+    note.textContent = copied
+      ? "Enquiry copied! Paste it into Messenger and press send."
+      : "Messenger is opening. Please type your details into the chat.";
+    note.className = "form__note";
+    if (!win) setTimeout(() => { window.location.href = MESSENGER_URL; }, 1500);
+  });
 });

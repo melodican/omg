@@ -124,6 +124,11 @@ h1, h2, h3 { line-height: 1.1; margin: 0 0 .5em; }
   color: var(--cyan);
   text-shadow: 0 0 18px rgba(45, 226, 230, .7);
 }
+.hero__tagline {
+  font-weight: 800; font-size: clamp(1.05rem, 3vw, 1.35rem);
+  color: var(--amber); margin: 0 0 1rem; font-style: italic;
+}
+.gigs__recent { color: var(--text) !important; }
 .hero__lede { max-width: 36rem; margin: 0 auto 2rem; color: var(--muted); font-size: 1.2rem; }
 .hero__cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
@@ -170,7 +175,7 @@ h1, h2, h3 { line-height: 1.1; margin: 0 0 .5em; }
 .section--alt { background: var(--bg-alt); border-block: 1px solid var(--line); }
 .section__title { font-family: var(--display); font-weight: 400; font-size: clamp(1.9rem, 5vw, 3rem); max-width: 22ch; }
 
-.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; margin-top: 2.5rem; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; margin-top: 2.5rem; }
 .card {
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 30px; transition: transform .25s, border-color .25s;
