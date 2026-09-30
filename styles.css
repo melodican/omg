@@ -41,6 +41,7 @@ h1, h2, h3 { line-height: 1.1; margin: 0 0 .5em; }
   border-radius: 999px;
   border: 2px solid transparent;
   background: var(--grad);
+  background-origin: border-box; /* stop the gradient repeating under the border */
   color: #1a0b14;
   font-weight: 800;
   text-decoration: none;
